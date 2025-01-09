@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Go To-Do List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 2rem;
+        }
+        .task {
+            margin-bottom: 1rem;
+        }
+        .done {
+            text-decoration: line-through;
+            color: gray;
+        }
+    </style>
+</head>
+<body>
+    <h1>Go To-Do List</h1>
+    <form action="/add" method="POST">
+        <input type="text" name="task" placeholder="New Task" required>
+        <button type="submit">Add Task</button>
+    </form>
+    <ul>
+        {{range .}}
+        <li class="task">
+            <form action="/toggle" method="POST" style="display:inline;">
+                <input type="hidden" name="id" value="{{.ID}}">
+                <button type="submit">{{if .Done}}Undo{{else}}Done{{end}}</button>
+            </form>
+            <span class="{{if .Done}}done{{end}}">{{.Name}}</span>
+        </li>
+        {{end}}
+    </ul>
+</body>
+</html>
